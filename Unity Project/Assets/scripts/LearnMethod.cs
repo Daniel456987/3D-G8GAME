@@ -16,6 +16,11 @@ public class LearnMethod : MonoBehaviour
         print("弓箭方向：" + direction);
     }
 
+    private int Square(int number = 2)
+    {
+        return number * number;
+    }
+
     private void Start()
     {
         print("哈囉，沃德");
@@ -27,5 +32,10 @@ public class LearnMethod : MonoBehaviour
         Shoot(1, 1.5f);
         Shoot(10, 10.5f, "火屬性");
         Shoot(3, 2, direction: "前後方");
+
+        print(Square());
+
+        int result = Square(9);
+        print(result);
     }
 }
