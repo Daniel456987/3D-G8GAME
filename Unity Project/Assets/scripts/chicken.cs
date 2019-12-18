@@ -15,6 +15,9 @@ public class chicken : MonoBehaviour
     public Transform tran;
     public Rigidbody rig;
     public Animator ani;
+    public AudioSource aud;
+
+    public AudioClip soundBark;
 
     private void Update()
     {
@@ -30,8 +33,11 @@ public class chicken : MonoBehaviour
     /// </summary>
     private void Run()
     {
+        if (ani.GetCurrentAnimatorStateInfo(0).IsName("撿東西觸發")) return;
         float v = Input.GetAxis("Vertical");
         rig.AddForce(tran.forward * speed * v * Time.deltaTime);
+
+        ani.SetBool("走路開關", v != 0);
     }
     /// <summary>
     /// 旋轉
@@ -49,6 +55,8 @@ public class chicken : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             ani.SetTrigger("拍翅膀觸發");
+
+            aud.PlayOneShot(soundBark, 0.6f);
         }
     }
     /// <summary>
