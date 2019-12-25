@@ -12,6 +12,27 @@ public class chicken : MonoBehaviour
     public int 雞蛋數量 = 5;
     #endregion
 
+    [Header("檢視物品位置")]
+    public Rigidbody rigCatch;
+
+    
+    private void OnTriggerStay(Collider other)
+    {
+        print(other.name);
+
+        if(other.name == "雞腿" && ani.GetCurrentAnimatorStateInfo(0).IsName("Eat"))
+        {
+            Physics.IgnoreCollision(other,GetComponent<Collider>());
+            
+            other.GetComponent<HingeJoint>().connectedBody = rigCatch;
+        }
+
+        if (other.name == "感應區" && ani.GetCurrentAnimatorStateInfo(0).IsName("Eat"))
+        {
+            GameObject.Find("雞腿").GetComponent<HingeJoint>().connectedBody = null;
+        }
+    }
+
     public Transform tran;
     public Rigidbody rig;
     public Animator ani;
@@ -33,7 +54,7 @@ public class chicken : MonoBehaviour
     /// </summary>
     private void Run()
     {
-        if (ani.GetCurrentAnimatorStateInfo(0).IsName("撿東西觸發")) return;
+        if (ani.GetCurrentAnimatorStateInfo(0).IsName("Eat")) return;
         float v = Input.GetAxis("Vertical");
         rig.AddForce(tran.forward * speed * v * Time.deltaTime);
 
